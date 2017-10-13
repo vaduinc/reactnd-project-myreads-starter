@@ -17,31 +17,23 @@ class Search extends Component{
     }
 
     /**
-     * Event function that triggers AJAX API call when there are at least
-     * 3 characters. Otherwise, it just update the state.query variable
+     * Event function that triggers AJAX API call when user types in the
+     * input 
      */
     updateQuery = (query) =>{
 
         // something was typed on the input field
         if (query){
-            if (query.length>2){
-                BooksAPI.search(query).then((resultBooks) => {
-                    // if there are no results with the typed input
-                    if (resultBooks.error){
-                        resultBooks = []
-                    }
-                    this.setState ({ 
-                            query : query,
-                            searchBooks : resultBooks
-                        })
-                }) 
-            }else{
-                /* Requires at least 3 character to submit a search */
-                this.setState( {  
+            BooksAPI.search(query).then((resultBooks) => {
+                // if there are no results with the typed input
+                if (resultBooks.error){
+                    resultBooks = []
+                }
+                this.setState ({ 
                         query : query,
-                        searchBooks: []
-                })
-            }
+                        searchBooks : resultBooks
+                    })
+            }) 
         }else{
             // The input field is blank
             this.clearQuery();

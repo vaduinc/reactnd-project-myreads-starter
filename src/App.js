@@ -40,8 +40,7 @@ class BooksApp extends Component {
    */
   changeBook = (changedBooks) => {
     let oldBooks = this.state.books
-    let newBooks = []
-
+    
     this.setState({
           books : this.shelves.map((shelf) => {
                     return changedBooks[shelf].map(function(id) { 
@@ -49,7 +48,7 @@ class BooksApp extends Component {
                       bookFound.shelf=shelf
                       return bookFound
                     })
-                  }).reduce ( ([newBooks], col) => newBooks.concat(col)  )
+                  }).reduce ( (newBooks = [], col) => newBooks.concat(col)  )
         })
   }
 
