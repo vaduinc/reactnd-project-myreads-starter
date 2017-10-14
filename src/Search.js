@@ -4,16 +4,26 @@ import Books from './Books'
 
 /**
  * Search page to get results based on the criteria typed on the input field.
- * It only execute/fetch AJAX call when there are at least 3 characters.
- */
+  */
 class Search extends Component{
 
-    changedBooks = []
+    shelves = ['currentlyReading','wantToRead','read']
     changed = false
 
     state = {
         query: '',
-        searchBooks: []
+        searchBooks: [],
+        currentShelves: []
+    }
+
+    /**
+    * Set my current shelves and their book to the state.
+    * The component will update if the shelves change
+    */
+    componentDidMount() {
+        this.setState ({ 
+            currentShelves: this.props.currentBooks
+        })
     }
 
     /**
@@ -30,9 +40,9 @@ class Search extends Component{
                     resultBooks = []
                 }
                 this.setState ({ 
-                        query : query,
-                        searchBooks : resultBooks
-                    })
+                    query : query,
+                    searchBooks : resultBooks
+                })
             }) 
         }else{
             // The input field is blank
@@ -41,13 +51,31 @@ class Search extends Component{
     }
 
     /**
-     * Event function passed to books component.
-     * It flags if there were changes on any book status.
+     * Updates the current shelves when a book is moved to a different shelf
      */
-    changeBook = (books) => {
-        this.changedBooks = books
-        this.changed = true
+    updateCurrentShelves = (changedBooks,oldBooks,actualResultSearch) =>{
+        return this.shelves.map((shelf) => {
+            return changedBooks[shelf].map(function(id) { 
+              let bookFound = oldBooks.find((item) => id===item.id )
+              if (!bookFound){
+                  bookFound = actualResultSearch.find((element) => element.id===id)
+              }
+              bookFound.shelf=shelf
+              return bookFound
+            })
+          }).reduce ( (newBooks = [], col) => newBooks.concat(col)  )
     }
+
+    /**
+     * Event function passed to books component.
+     * It flags if there were changes on any shelf
+     */
+    changeBook = (changedBooks) => {       
+        this.changed = true
+        this.setState({
+            currentShelves : this.updateCurrentShelves(changedBooks,this.state.currentShelves,this.state.searchBooks)
+        })
+     }
 
     /**
      * if the input field is clean then clear query
@@ -62,13 +90,13 @@ class Search extends Component{
 
     render(){
 
-        const { query, searchBooks } = this.state
-        const { currentBooks, needUpdate } = this.props
+        const { searchBooks,currentShelves } = this.state
+        const { needUpdate } = this.props
 
         let showingBooks
         if (searchBooks){
             showingBooks = searchBooks.map(function (book) {
-                let found = currentBooks.find((item) => item.id===book.id);
+                let found = currentShelves.find((item) => item.id===book.id);
                 return found?found:book;
             })   
         }else{
@@ -79,24 +107,23 @@ class Search extends Component{
 
         return (
             <div className="search-books">
-            <div className="search-books-bar">
-            <a className="close-search" onClick={() => needUpdate(this.changed) }>Close</a>
-            <div className="search-books-input-wrapper">
-                <input type="text" 
-                    placeholder="Search by title or author"
-                    value={query}
-                    onChange={(event) => this.updateQuery(event.target.value) }
-                    />
+                <div className="search-books-bar">
+                <a className="close-search" onClick={() => needUpdate(this.changed) }>Close</a>
+                <div className="search-books-input-wrapper">
+                    <input type="text" 
+                        placeholder="Search by title or author"
+                        onChange={(event) => this.updateQuery(event.target.value) }
+                        />
+                </div>
+                </div>
+                <div className="search-books-results">
+                    <Books 
+                        books={showingBooks}
+                        statusName={defaultShelf}
+                        onChangeBook={this.changeBook}
+                    />  
+                </div>
             </div>
-            </div>
-            <div className="search-books-results">
-                <Books 
-                    books={showingBooks}
-                    statusName={defaultShelf}
-                    onChangeBook={this.changeBook}
-                />  
-            </div>
-        </div>
         )
     }
 

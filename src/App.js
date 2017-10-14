@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import Bookshelf  from './Bookshelf'
 import Search from './Search'
+import Title from './Title'
 import './App.css'
 
 class BooksApp extends Component {
@@ -68,9 +69,7 @@ class BooksApp extends Component {
 
     return (
       <div className="list-books">
-        <div className="list-books-title">
-          <h1>MyReads</h1>
-        </div>
+        <Title title='My Reads'/>
         <div className="list-books-content">
           <Route exact path='/' render={() => (
             <div>
