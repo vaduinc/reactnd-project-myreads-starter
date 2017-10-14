@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {SHELVES} from './Utils'
 import * as BooksAPI from './BooksAPI'
 
 /**
@@ -34,9 +35,9 @@ class Books extends Component {
                                     <div className="book-shelf-changer">
                                         <select onChange={(e) => this.changeBookStatus(book.id, e)} value={ book.shelf?book.shelf:statusName }>
                                             <option value="moveto" disabled>Move to...</option>
-                                            <option value="currentlyReading">Currently Reading</option>
-                                            <option value="wantToRead">Want to Read</option>
-                                            <option value="read">Read</option>
+                                            <option value={SHELVES[0]}>Currently Reading</option>
+                                            <option value={SHELVES[1]}>Want to Read</option>
+                                            <option value={SHELVES[2]}>Read</option>
                                             <option value="none">None</option>
                                         </select>
                                     </div>

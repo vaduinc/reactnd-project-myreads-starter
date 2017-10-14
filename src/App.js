@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom'
+import {SHELVES, updateCurrentShelves} from './Utils'
 import * as BooksAPI from './BooksAPI'
 import Bookshelf  from './Bookshelf'
 import Search from './Search'
@@ -8,8 +9,6 @@ import './App.css'
 
 class BooksApp extends Component {
 
-  shelves = ['currentlyReading','wantToRead','read']
-  
   state = {
     books: []
   }
@@ -40,16 +39,8 @@ class BooksApp extends Component {
    * notified when shelves change
    */
   changeBook = (changedBooks) => {
-    let oldBooks = this.state.books
-    
     this.setState({
-          books : this.shelves.map((shelf) => {
-                    return changedBooks[shelf].map(function(id) { 
-                      let bookFound = oldBooks.find((item) => id===item.id )
-                      bookFound.shelf=shelf
-                      return bookFound
-                    })
-                  }).reduce ( (newBooks = [], col) => newBooks.concat(col)  )
+          books : updateCurrentShelves(changedBooks,this.state.books)
         })
   }
 
@@ -75,21 +66,21 @@ class BooksApp extends Component {
             <div>
               <div>
               <Bookshelf
-                books={this.state.books.filter( (book) => book.shelf===this.shelves[0]) }
+                books={this.state.books.filter( (book) => book.shelf===SHELVES[0]) }
                 shelfName='Currently Reading'
-                statusName={this.shelves[0]}
+                statusName={SHELVES[0]}
                 onChangeBook={this.changeBook}
               />
               <Bookshelf
-                books={this.state.books.filter( (book) => book.shelf===this.shelves[1]) }
+                books={this.state.books.filter( (book) => book.shelf===SHELVES[1]) }
                 shelfName='Want to Read'
-                statusName={this.shelves[1]}
+                statusName={SHELVES[1]}
                 onChangeBook={this.changeBook}
               />
               <Bookshelf
-                books={this.state.books.filter( (book) => book.shelf===this.shelves[2]) }
+                books={this.state.books.filter( (book) => book.shelf===SHELVES[2]) }
                 shelfName='Read'
-                statusName={this.shelves[2]}
+                statusName={SHELVES[2]}
                 onChangeBook={this.changeBook}
               />
               </div>

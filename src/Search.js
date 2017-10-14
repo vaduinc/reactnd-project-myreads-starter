@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
 import Books from './Books'
+import Title from './Title'
+import {updateCurrentShelves} from './Utils'
 
 /**
  * Search page to get results based on the criteria typed on the input field.
   */
 class Search extends Component{
 
-    shelves = ['currentlyReading','wantToRead','read']
+    //shelves = ['currentlyReading','wantToRead','read']
     changed = false
 
     state = {
@@ -51,29 +53,13 @@ class Search extends Component{
     }
 
     /**
-     * Updates the current shelves when a book is moved to a different shelf
-     */
-    updateCurrentShelves = (changedBooks,oldBooks,actualResultSearch) =>{
-        return this.shelves.map((shelf) => {
-            return changedBooks[shelf].map(function(id) { 
-              let bookFound = oldBooks.find((item) => id===item.id )
-              if (!bookFound){
-                  bookFound = actualResultSearch.find((element) => element.id===id)
-              }
-              bookFound.shelf=shelf
-              return bookFound
-            })
-          }).reduce ( (newBooks = [], col) => newBooks.concat(col)  )
-    }
-
-    /**
      * Event function passed to books component.
      * It flags if there were changes on any shelf
      */
     changeBook = (changedBooks) => {       
         this.changed = true
         this.setState({
-            currentShelves : this.updateCurrentShelves(changedBooks,this.state.currentShelves,this.state.searchBooks)
+            currentShelves : updateCurrentShelves(changedBooks,this.state.currentShelves,this.state.searchBooks)
         })
      }
 
@@ -107,6 +93,7 @@ class Search extends Component{
 
         return (
             <div className="search-books">
+                <Title title='... search results'/>
                 <div className="search-books-bar">
                 <a className="close-search" onClick={() => needUpdate(this.changed) }>Close</a>
                 <div className="search-books-input-wrapper">

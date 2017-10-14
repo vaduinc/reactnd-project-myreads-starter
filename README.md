@@ -1,11 +1,11 @@
-# MyReads
+# My Reads
 ---
 
-## Project Purpose:
+## Project:
 
 First project for REACT Udacity nanodegree. Shows the basic structure and operation of React-based Web App.
 
-## How to Load the App
+## How to...
 The project uses Node.js and the Create-React-App starter.  You MUST have NODEJS installed already in your computer
 
 Go to the directory where you want to store the app
@@ -17,6 +17,15 @@ Then launch the app using
 ```
 npm start
 ```
+
+You browser should open automatically using http://localhost:3000 URL, see next picture
+```
+![Home Screen](screenshots/home1.png "home")
+
+
+Click the bottom "+" image to go to the search page
+```
+![Search Screen](screenshots/search1.png "search results")
 
 ### Resources:
 * [Project starter template](https://github.com/udacity/reactnd-project-myreads-starter)
