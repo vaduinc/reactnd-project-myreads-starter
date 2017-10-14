@@ -22,7 +22,8 @@ You browser should open automatically using http://localhost:3000 URL, see next 
 ![Home](screenshots/home1.png "home")
 
 
-Click the bottom "+" image to go to the search page
+Click the "+" image at the bottom of the home page to go to the search
+
 ![Search Screen](screenshots/search1.png "search results")
 
 ### Resources:
