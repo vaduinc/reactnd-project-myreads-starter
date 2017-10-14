@@ -19,12 +19,10 @@ npm start
 ```
 
 You browser should open automatically using http://localhost:3000 URL, see next picture
-```
-![Home Screen](screenshots/home1.png "home")
+![Home](screenshots/home1.png "home")
 
 
 Click the bottom "+" image to go to the search page
-```
 ![Search Screen](screenshots/search1.png "search results")
 
 ### Resources:
