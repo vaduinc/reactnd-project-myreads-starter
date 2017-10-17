@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Books from './Books'
 
 /**
@@ -7,25 +7,23 @@ import Books from './Books'
  * wantToRead
  * read
  */
-class Bookshelf extends Component {
+const Bookshelf = props =>  {
 
-    render(){
-        const { books, shelfName , statusName, onChangeBook } = this.props
+    const { books, shelfName , statusName, onChangeBook } = props
 
-        return (
-            <div className="bookshelf">
-                <h2 className="bookshelf-title">{shelfName}</h2>
-                <div className="bookshelf-books">
-                    <Books 
-                        books={books}
-                        statusName={statusName}
-                        onChangeBook={onChangeBook}
-                    />    
-                </div>
+    return (
+        <div className="bookshelf">
+            <h2 className="bookshelf-title">{shelfName}</h2>
+            <div className="bookshelf-books">
+                <Books 
+                    books={books}
+                    statusName={statusName}
+                    onChangeBook={onChangeBook}
+                />    
             </div>
-        )
-    }
-
+        </div>
+    )
+    
 }
 
 export default Bookshelf

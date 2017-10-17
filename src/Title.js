@@ -1,18 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 /**
  * Set title using the input props "title"
  */
-class Title extends Component {
+const Title = props => {
 
-    render(){
-        return (
-            <div className="list-books-title">
-                <h1>{ this.props.title }</h1>
-            </div>
-        )
-    }
-
+    return (
+        <div className="list-books-title">
+            <h1>{ props.title }</h1>
+        </div>
+    )
 }
 
 export default Title

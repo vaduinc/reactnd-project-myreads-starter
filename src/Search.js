@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
+import { Debounce } from 'react-throttle';
 import Books from './Books'
 import Title from './Title'
 import {updateCurrentShelves} from './Utils'
@@ -9,7 +10,6 @@ import {updateCurrentShelves} from './Utils'
   */
 class Search extends Component{
 
-    //shelves = ['currentlyReading','wantToRead','read']
     changed = false
 
     state = {
@@ -97,10 +97,12 @@ class Search extends Component{
                 <div className="search-books-bar">
                 <a className="close-search" onClick={() => needUpdate(this.changed) }>Close</a>
                 <div className="search-books-input-wrapper">
-                    <input type="text" 
-                        placeholder="Search by title or author"
-                        onChange={(event) => this.updateQuery(event.target.value) }
-                        />
+                    <Debounce time="700" handler="onChange">
+                        <input type="text" 
+                            placeholder="Search by title or author"
+                            onChange={(event) => this.updateQuery(event.target.value) }
+                            />
+                    </Debounce>
                 </div>
                 </div>
                 <div className="search-books-results">
